@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
+import android.content.Intent;
 
 
 public class RegistrationActivity extends ActionBarActivity {
@@ -16,6 +17,7 @@ public class RegistrationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        Intent fromLogin = getIntent();
 
         // Fill spinner items
         mSecuritySpinner = (Spinner) findViewById(R.id.spinner);

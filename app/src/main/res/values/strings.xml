@@ -23,6 +23,7 @@
     <string name="password_confirm">Confirm password</string>
     <string name="action_register_short">Register</string>
     <string name="action_register">Register</string>
+    <string name="answer_text">Answer</string>
 
     <!-- MyAccount -->
     <string name="title_activity_my_account">MyAccount</string>

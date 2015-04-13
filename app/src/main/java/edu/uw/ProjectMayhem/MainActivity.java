@@ -20,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void switchToLogin(View view) {
         System.err.println("ACCEPTED!!!");
-        Intent loginIntent = new Intent(this, LoginActivity.class);
+        Intent loginIntent = new Intent(this, RegistrationActivity.class);
         startActivity(loginIntent);
     }
 
