@@ -48,7 +48,7 @@ public class ResetActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset);
 
-        Intent whatever = getIntent();
+        Intent loginIntent = getIntent();
 
     }
 

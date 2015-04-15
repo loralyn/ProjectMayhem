@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
 
 
 public class MyAccount extends ActionBarActivity {
@@ -16,8 +18,20 @@ public class MyAccount extends ActionBarActivity {
         setContentView(R.layout.activity_my_account);
 
         Intent loginIntent = getIntent();
+
+        Button mTrajectoryButton = (Button) findViewById(R.id.trajectory_button);
+        mTrajectoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myTrajectory(view);
+            }
+        });
     }
 
+    private void myTrajectory(View view) {
+        Intent trajectoryIntent = new Intent(this, MyTrajectory.class);
+        startActivity(trajectoryIntent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -19,18 +19,23 @@
     <!-- End login -->
 
     <!-- Registration -->
-    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_registration">Registration</string>
     <string name="password_confirm">Confirm password</string>
     <string name="action_register_short">Register</string>
     <string name="action_register">Register</string>
     <string name="answer_text">Answer</string>
 
     <!-- MyAccount -->
-    <string name="title_activity_my_account">MyAccount</string>
+    <string name="title_activity_my_account">My Account</string>
+    <string name="start_hint">Start date</string>
+    <string name="end_hint">End date</string>
+    <string name="action_my_trajectory">My Trajectory</string>
 
     <!-- Forgot Password -->
+    <string name="title_activity_reset">Reset Password</string>
     <string name="action_forgot">Forgot Password</string>
     <string name="answer_hint">Answer</string>
     <string name="action_reset">Reset Password</string>
-    <string name="title_activity_reset">ResetActivity</string>
+    <string name="title_activity_my_trajectory">My Trajectory</string>
+
 </resources>
