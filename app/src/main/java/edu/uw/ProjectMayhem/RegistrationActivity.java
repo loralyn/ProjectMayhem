@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.*;
 import android.content.Intent;
 
@@ -28,8 +29,20 @@ public class RegistrationActivity extends ActionBarActivity {
 
         mSecuritySpinner.setAdapter(adapter);
 
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login(view);
+            }
+        });
+
     }
 
+    private void login(View view) {
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -55,6 +55,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private View mProgressView;
     private View mLoginFormView;
 
+    private Button mEmailSignInButton;
+    private Button mRegisterButton;
+    private Button mForgotButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +83,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,9 +91,30 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
+        mRegisterButton = (Button) findViewById(R.id.register_button);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                register(view);
+            }
+        });
+
+        mForgotButton = (Button) findViewById(R.id.forgot_button);
+        mForgotButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reset(view);
+            }
+        });
+
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void reset(View view) {
+        Intent resetIntent = new Intent(this, ResetActivity.class);
+        startActivity(resetIntent);
     }
 
     private void register(View view) {

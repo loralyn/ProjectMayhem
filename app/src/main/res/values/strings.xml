@@ -27,4 +27,10 @@
 
     <!-- MyAccount -->
     <string name="title_activity_my_account">MyAccount</string>
+
+    <!-- Forgot Password -->
+    <string name="action_forgot">Forgot Password</string>
+    <string name="answer_hint">Answer</string>
+    <string name="action_reset">Reset Password</string>
+    <string name="title_activity_reset">ResetActivity</string>
 </resources>
