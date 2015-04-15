@@ -1,11 +1,11 @@
 package edu.uw.ProjectMayhem;
 
-import android.content.SharedPreferences;
+import java.io.Serializable;
 
 /**
  * Created by Brian on 4/11/2015.
  */
-public class User {
+public class User implements Serializable {
 
     private String mUserID;
     private String mEmail;

@@ -1,17 +1,23 @@
 package edu.uw.ProjectMayhem;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
-import android.content.Intent;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 
 public class RegistrationActivity extends ActionBarActivity {
 
     private Spinner mSecuritySpinner;
+    private User mUser;
+    private static String uid = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,17 @@ public class RegistrationActivity extends ActionBarActivity {
 
         mSecuritySpinner.setAdapter(adapter);
 
+        final EditText mEmailText = (EditText) findViewById(R.id.email);
+        final EditText mPasswordText = (EditText) findViewById(R.id.password);
+        final EditText mAnswerText = (EditText) findViewById(R.id.answer_field);
+
+        Button mRegisterButton = (Button) findViewById(R.id.email_register_button);
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mUser = new User(uid, mEmailText.getText().toString(), mPasswordText.getText().toString(), mAnswerText.getText().toString());
+            }
+        });
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +59,18 @@ public class RegistrationActivity extends ActionBarActivity {
     private void login(View view) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putSerializable("user", mUser);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mUser = (User) savedInstanceState.getSerializable("user");
     }
 
     @Override
