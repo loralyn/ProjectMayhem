@@ -1,9 +1,12 @@
 package edu.uw.ProjectMayhem;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,20 +14,35 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 
 public class RegistrationActivity extends ActionBarActivity {
 
-    private Spinner mSecuritySpinner;
     private User mUser;
     private static String uid = "1";
+    private static final String PREFS_NAME = "preferences";
+
+    private EditText mEmailText;
+    private EditText mPasswordText;
+    private EditText mAnswerText;
+    private Spinner mSecuritySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        mEmailText = (EditText) findViewById(R.id.email);
+        mPasswordText = (EditText) findViewById(R.id.password);
+        mAnswerText = (EditText) findViewById(R.id.answer_field);
+
         Intent fromLogin = getIntent();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String n = prefs.getString("email", mEmailText.getText().toString());
+        mEmailText.setText(n.toString());
 
         // Fill spinner items
         mSecuritySpinner = (Spinner) findViewById(R.id.spinner);
@@ -35,14 +53,11 @@ public class RegistrationActivity extends ActionBarActivity {
 
         mSecuritySpinner.setAdapter(adapter);
 
-        final EditText mEmailText = (EditText) findViewById(R.id.email);
-        final EditText mPasswordText = (EditText) findViewById(R.id.password);
-        final EditText mAnswerText = (EditText) findViewById(R.id.answer_field);
-
         Button mRegisterButton = (Button) findViewById(R.id.email_register_button);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mUser = new User(uid, mEmailText.getText().toString(), mPasswordText.getText().toString(), mAnswerText.getText().toString());
+                login(v);
             }
         });
 
@@ -58,6 +73,7 @@ public class RegistrationActivity extends ActionBarActivity {
 
     private void login(View view) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
+        finish();
         startActivity(loginIntent);
     }
 
@@ -93,5 +109,20 @@ public class RegistrationActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("registrationActivity", "ON DESTROY CALLED!");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString("email", mEmailText.getText().toString());
+        editor.putString("password", mPasswordText.getText().toString());
+        editor.putString("answer", mAnswerText.getText().toString());
+        editor.putString("security", mSecuritySpinner.getSelectedItem().toString());
+
+        editor.commit();
     }
 }

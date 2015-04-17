@@ -8,13 +8,16 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,7 +51,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+    private EditText mEmail;
+    private EditText mPassword;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -56,20 +60,38 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private Button mRegisterButton;
     private Button mForgotButton;
 
+    private String savedEmail;
+    private String savedPassword;
+    private String savedAnswer;
+    private String savedQuestion;
+
+    private Bundle instanceState;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instanceState = savedInstanceState;
         setContentView(R.layout.activity_login);
 
         Intent agreementIntent = getIntent();
+
+        // Get stored values to compare to
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        savedEmail = prefs.getString("email", "no default");
+        Log.d("saved password", prefs.getString("password", "no default"));
+        savedPassword = prefs.getString("password", "no default");
+        savedAnswer = prefs.getString("answer", "no default");
+        savedQuestion = prefs.getString("security", "no default");
+
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPassword = (EditText) findViewById(R.id.password);
+        mEmail = (EditText) findViewById(R.id.email);
 
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -138,22 +160,23 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         // Reset errors.
         mEmailView.setError(null);
-        mPasswordView.setError(null);
+        mPassword.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String password = mPassword.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-
-        // Check for a valid password, if the user entered one.
+            /*
+            // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+            mPassword.setError(getString(R.string.error_invalid_password));
+            focusView = mPassword;
             cancel = true;
         }
+        */
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
@@ -174,12 +197,22 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
 
-            // If login is successful, switch to MyAccount
-            Intent accountIntent = new Intent(this, MyAccount.class);
-            startActivity(accountIntent);
+            // Compare entered values to saved values
+            Log.d("email", mEmail.getText().toString());
+            Log.d("saved email", savedEmail);
+            Log.d("password", mPassword.getText().toString());
+            Log.d("saved password", savedPassword);
+            if (mEmail.getText().toString().equals(savedEmail) && mPassword.getText().toString().equals(savedPassword)) {
+                // If login is successful, switch to MyAccount
+                showProgress(false);
+                Intent accountIntent = new Intent(this, MyAccount.class);
+                startActivity(accountIntent);
+            } else {
+                showProgress(false);
+                Log.d("password_incorrect", "INVALID LOGIN");
+                onCreate(instanceState);
+            }
         }
     }
 
@@ -328,8 +361,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+//                mPassword.setError(getString(R.string.error_incorrect_password));
+//                mPassword.requestFocus();
             }
         }
 

@@ -27,14 +27,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Your first pet\'s name?"
-                android:id="@+id/textView3" />
+                android:id="@+id/sec_question" />
 
             <EditText android:id="@+id/security_answer" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/answer_hint"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_reset"
                 android:imeOptions="actionUnspecified" android:inputType="textPassword"
+                android:maxLines="1" android:singleLine="true" />
+
+            <EditText android:id="@+id/new_password" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="@string/new_pw"
+                android:maxLines="1" android:singleLine="true" />
+
+            <EditText android:id="@+id/confirm_password" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="@string/confirm_pw"
                 android:maxLines="1" android:singleLine="true" />
 
             <Button android:id="@+id/reset_password" style="?android:textAppearanceSmall"

@@ -1,8 +1,12 @@
 package edu.uw.ProjectMayhem;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,14 +14,28 @@ import android.view.View;
 
 public class MainActivity extends ActionBarActivity {
 
+    private boolean hasAgreed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Log.d("has agreed?", new Boolean(prefs.getBoolean("agreed", false)).toString());
+        hasAgreed = prefs.getBoolean("agreed", false);
+        if (hasAgreed) {
+            Intent skipAgree = new Intent(this, LoginActivity.class);
+            startActivity(skipAgree);
+        }
     }
 
     public void switchToLogin(View view) {
         System.err.println("ACCEPTED!!!");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("agreed", true);
+        editor.commit();
         Intent loginIntent = new Intent(this, RegistrationActivity.class);
         startActivity(loginIntent);
     }
