@@ -15,26 +15,41 @@ import android.widget.TextView;
 
 
 /**
- * A login screen that offers login via email/password.
+ * A screen that allows teh user to reset his/her password.
  */
 public class ResetActivity extends Activity {
+
+    /** Displays the user's security question. */
+    private TextView mQuestion;
+
+    /** Where the user types the new password. */
+    private EditText mNewPassword;
+
+    /** Where the user types a ccnfirmed password. */
+    private EditText mConfirmPassword;
+
+    /** Where the user types in email address. */
+    private EditText mEmail;
+
+    /** Where user enters the answer for his/her security question. */
+    private EditText mAnswer;
+
+    /** Initiates the reset password process. */
+    private Button mResetButton;
+
+    /** Stores a saved answer to the security question */
+    private String savedAnswer;
+
+    /** Stores a saved user email. */
+    private String currentEmail;
 
     private SharedPreferences prefs;
     private Bundle savedInstance;
 
-    private TextView mQuestion;
-    private EditText mNewPassword;
-    private EditText mConfirmPassword;
-    private EditText mEmail;
-    private EditText mAnswer;
-    private Button mResetButton;
-
-    private String savedAnswer;
-    private String currentEmail;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        savedInstance = savedInstanceState;
         savedInstance = savedInstanceState;
         setContentView(R.layout.activity_reset);
 
@@ -63,6 +78,10 @@ public class ResetActivity extends Activity {
 
     }
 
+    /**
+     * Attempts to reset the user's password.
+     * @param view the view context of widget calling this method.
+     */
     private void reset(View view) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
 

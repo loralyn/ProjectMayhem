@@ -9,6 +9,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/** Displays the user's trajectory information. */
 public class MyTrajectory extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.

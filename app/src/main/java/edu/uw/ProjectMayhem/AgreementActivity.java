@@ -3,7 +3,6 @@ package edu.uw.ProjectMayhem;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -12,14 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class MainActivity extends ActionBarActivity {
+public class AgreementActivity extends ActionBarActivity {
 
+    /** True if the user has already agreed to the terms. Otherwise false. */
     private boolean hasAgreed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_agreement);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Log.d("has agreed?", new Boolean(prefs.getBoolean("agreed", false)).toString());
@@ -30,6 +30,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Saves that the user has agreed to the terms and switches to the login screen.
+     */
     public void switchToLogin(View view) {
         System.err.println("ACCEPTED!!!");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -40,11 +43,15 @@ public class MainActivity extends ActionBarActivity {
         startActivity(loginIntent);
     }
 
+    /**
+     * Exits the app.
+     */
     public void decline(View view) {
         System.exit(0);
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -52,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

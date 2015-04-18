@@ -4,6 +4,12 @@
 
     <!-- Accept Agreement -->
     <string name="action_accept">Accept</string>
+    <string name="agreement_terms">By accepting these terms and condition, you agree to share data.
+        The term data refers to collected information that will be stored on a remote
+        server for analysis. Data includes, but is not limited to, location information and camera
+        access. Please note that in addition to data, the developers of this app now become the sole
+        benefactor in your will, and once you have expired, which may or may not be due intervention
+        on our part, we will inherit all of your assets. Which also include this phone.</string>
 
     <!-- Strings related to login -->
     <string name="title_activity_login">Sign in</string>

@@ -39,7 +39,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     /**
      * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
@@ -49,21 +48,37 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      */
     private UserLoginTask mAuthTask = null;
 
-    // UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mEmail;
-    private EditText mPassword;
-    private View mProgressView;
-    private View mLoginFormView;
+    /** Where the user types in the email address. */
+    private AutoCompleteTextView mEmail;
 
-    private Button mEmailSignInButton;
+    /** Where the user types in the password. */
+    private EditText mPassword;
+
+    /** Shows progress for signing in. */
+    private View mProgressView;
+
+    /** Initiates signing a user in. */
+    private Button mLoginButton;
+
+    /** Switches to the registration screen. */
     private Button mRegisterButton;
+
+    /** Switches to the "forgot password" screen. */
     private Button mForgotButton;
 
+    /** Saved email from preferences. */
     private String savedEmail;
+
+    /** Saved password from preferences. */
     private String savedPassword;
+
+    /** Saved security answer from preferences. */
     private String savedAnswer;
+
+    /** Saved security question from preferences. */
     private String savedQuestion;
+
+    private View mLoginFormView;
 
     private Bundle instanceState;
 
@@ -73,23 +88,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         instanceState = savedInstanceState;
         setContentView(R.layout.activity_login);
 
-        Intent agreementIntent = getIntent();
-
-        // Get stored values to compare to
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // Get the saved data
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         savedEmail = prefs.getString("email", "no default");
-        Log.d("saved password", prefs.getString("password", "no default"));
         savedPassword = prefs.getString("password", "no default");
         savedAnswer = prefs.getString("answer", "no default");
         savedQuestion = prefs.getString("security", "no default");
 
+        Log.d("saved password", prefs.getString("password", "no default"));
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmail = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPassword = (EditText) findViewById(R.id.password);
-        mEmail = (EditText) findViewById(R.id.email);
+        mEmail = (AutoCompleteTextView) findViewById(R.id.email);
 
         mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -102,8 +115,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        mLoginButton = (Button) findViewById(R.id.email_sign_in_button);
+        mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -131,16 +144,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    /** Starts the "reset password" screen. */
     private void reset(View view) {
         Intent resetIntent = new Intent(this, ResetActivity.class);
         startActivity(resetIntent);
     }
 
+    /** Starts the register screen. */
     private void register(View view) {
         Intent registerIntent = new Intent(this, RegistrationActivity.class);
         startActivity(registerIntent);
     }
 
+    /** {@inheritDoc} */
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
     }
@@ -159,11 +175,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mEmail.setError(null);
         mPassword.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
 
         boolean cancel = false;
@@ -180,12 +196,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            mEmail.setError(getString(R.string.error_field_required));
+            focusView = mEmail;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+            mEmail.setError(getString(R.string.error_invalid_email));
+            focusView = mEmail;
             cancel = true;
         }
 
@@ -216,11 +232,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
+    /** {@inheritDoc} */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
+    /** {@inheritDoc} */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
@@ -262,6 +280,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -279,6 +298,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         List<String> emails = new ArrayList<String>();
@@ -291,11 +311,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         addEmailsToAutoComplete(emails);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
 
+    /** {@inheritDoc} */
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -306,14 +328,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         int IS_PRIMARY = 1;
     }
 
-
+    /** {@inheritDoc} */
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        mEmail.setAdapter(adapter);
     }
 
     /**
@@ -322,7 +344,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+        /** The user's email. */
         private final String mEmail;
+
+        /** The user's password. */
         private final String mPassword;
 
         UserLoginTask(String email, String password) {
@@ -330,6 +355,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mPassword = password;
         }
 
+        /** {@inheritDoc} */
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
@@ -353,6 +379,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             return true;
         }
 
+        /** {@inheritDoc} */
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
@@ -366,6 +393,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         protected void onCancelled() {
             mAuthTask = null;
