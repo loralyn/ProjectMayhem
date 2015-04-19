@@ -6,18 +6,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
  * A screen that allows teh user to reset his/her password.
  */
-public class ResetActivity extends Activity {
+public class ResetActivity extends ActionBarActivity {
 
     /** Displays the user's security question. */
     private TextView mQuestion;
@@ -85,14 +87,20 @@ public class ResetActivity extends Activity {
     private void reset(View view) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
 
-        if (mEmail.getText().toString().equals(currentEmail) && mAnswer.getText().toString().equals(savedAnswer) && mNewPassword.getText().toString().equals(mConfirmPassword.getText().toString())) {
-            SharedPreferences.Editor editor = prefs.edit();
+        if (mEmail.getText().toString().equals(currentEmail)
+                && mAnswer.getText().toString().equals(savedAnswer)
+                && mNewPassword.getText().toString().equals(mConfirmPassword.getText().toString())) {
+
+            final SharedPreferences.Editor editor = prefs.edit();
             editor.putString("password", mNewPassword.getText().toString());
-            editor.commit();
+            editor.apply();
+
+            Toast.makeText(this, "Password reset successfully!", Toast.LENGTH_SHORT).show();
+
             finish();
             startActivity(loginIntent);
         } else {
-            Log.d("invalid token", "Invalid email or security answer");
+            Toast.makeText(this, "Invalid email and/or security answer.", Toast.LENGTH_SHORT).show();
             onCreate(savedInstance);
         }
 

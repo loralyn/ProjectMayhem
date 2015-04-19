@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">ProjectMayhem</string>
+    <string name="app_name">GeoTracker</string>
     <string name="action_settings">Settings</string>
 
     <!-- Accept Agreement -->
+    <string name="title_agreement">Terms &amp; Conditions</string>
     <string name="action_accept">Accept</string>
-    <string name="agreement_terms">By accepting these terms and condition, you agree to share data.
+    <string name="agreement_terms">By accepting these terms and conditions, you agree to share data.
         The term data refers to collected information that will be stored on a remote
         server for analysis. Data includes, but is not limited to, location information and camera
         access. Please note that in addition to data, the developers of this app now become the sole

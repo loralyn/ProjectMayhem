@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 
 public class RegistrationActivity extends ActionBarActivity {
@@ -67,6 +68,18 @@ public class RegistrationActivity extends ActionBarActivity {
             public void onClick(View v) {
                 mUser = new User(uid, mEmailText.getText().toString(), mPasswordText.getText().toString(),
                         mAnswerText.getText().toString(), mAnswerText.getText().toString());
+
+                // we need error checking eventually //////////////////////////////////////////////
+
+                final SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", mEmailText.getText().toString());
+                editor.putString("password", mPasswordText.getText().toString());
+                editor.putString("answer", mAnswerText.getText().toString());
+                editor.putString("security", mSecuritySpinner.getSelectedItem().toString());
+                editor.apply();
+
+                Toast.makeText(RegistrationActivity.this,
+                        "Registration successful!", Toast.LENGTH_SHORT).show();
 
                 login(v);
             }
@@ -145,7 +158,7 @@ public class RegistrationActivity extends ActionBarActivity {
         editor.putString("password", mPasswordText.getText().toString());
         editor.putString("answer", mAnswerText.getText().toString());
         editor.putString("security", mSecuritySpinner.getSelectedItem().toString());
-        editor.commit();
+        editor.apply();
 
         super.onDestroy();
     }

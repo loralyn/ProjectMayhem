@@ -1,5 +1,6 @@
 package edu.uw.ProjectMayhem;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class AgreementActivity extends ActionBarActivity {
+public class AgreementActivity extends Activity {
 
     /** True if the user has already agreed to the terms. Otherwise false. */
     private boolean hasAgreed;
