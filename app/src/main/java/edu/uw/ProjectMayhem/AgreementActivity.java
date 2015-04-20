@@ -22,11 +22,11 @@ public class AgreementActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.d("has agreed?", new Boolean(prefs.getBoolean("agreed", false)).toString());
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         hasAgreed = prefs.getBoolean("agreed", false);
+
         if (hasAgreed) {
-            Intent skipAgree = new Intent(this, LoginActivity.class);
+            final Intent skipAgree = new Intent(this, LoginActivity.class);
             startActivity(skipAgree);
         }
     }
@@ -35,12 +35,12 @@ public class AgreementActivity extends Activity {
      * Saves that the user has agreed to the terms and switches to the login screen.
      */
     public void switchToLogin(View view) {
-        System.err.println("ACCEPTED!!!");
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("agreed", true);
-        editor.commit();
-        Intent loginIntent = new Intent(this, RegistrationActivity.class);
+        editor.apply();
+
+        final Intent loginIntent = new Intent(this, RegistrationActivity.class);
         startActivity(loginIntent);
     }
 
