@@ -101,7 +101,8 @@ public class ResetActivity extends ActionBarActivity {
             startActivity(loginIntent);
         } else {
             Toast.makeText(this, "Invalid email and/or security answer.", Toast.LENGTH_SHORT).show();
-            onCreate(savedInstance);
+            // caused app to crash
+            // onCreate(savedInstance);
         }
 
     }

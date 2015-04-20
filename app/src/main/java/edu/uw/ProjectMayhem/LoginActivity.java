@@ -231,7 +231,8 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
                 Toast.makeText(this, "Invalid email and/or password.", Toast.LENGTH_SHORT).show();
 
-                onCreate(instanceState);
+                // this was causing the app to crash
+                // onCreate(instanceState);
             }
         }
     }

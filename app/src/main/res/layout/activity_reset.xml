@@ -32,7 +32,7 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
-            // not shown right now
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
