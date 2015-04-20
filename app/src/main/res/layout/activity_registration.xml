@@ -5,7 +5,8 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".RegistrationActivity">
+    tools:context=".RegistrationActivity"
+    android:background="#ff97d992">
 
     <ScrollView android:id="@+id/register_form"
         android:layout_width="match_parent"
@@ -23,7 +24,8 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:textSize="25sp"/>
 
             <EditText android:id="@id/password"
                 android:layout_width="match_parent"
@@ -31,21 +33,24 @@
                 android:hint="@string/prompt_password"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:textSize="25sp"/>
 
             <EditText android:id="@+id/password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password_confirm"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="25sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Security Question:"
-                android:id="@+id/textView2" />
+                android:id="@+id/textView2"
+                android:textSize="25sp"/>
 
             <Spinner android:id="@+id/spinner"
                 android:layout_width="match_parent"
@@ -55,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/answer_field"
-                android:hint="@string/answer_text"/>
+                android:hint="@string/answer_text"
+                android:textSize="25sp"/>
 
             <Button android:id="@+id/email_register_button"
                 style="?android:textAppearanceSmall"
@@ -63,7 +69,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_register"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="#ff000000"
+                android:textColor="#ff97d992"
+                android:textSize="25sp"/>
 
             <Button android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
@@ -71,7 +80,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#ff97d992"
+                android:background="#ff000000"
+                android:textSize="25sp"/>
 
 
         </LinearLayout>

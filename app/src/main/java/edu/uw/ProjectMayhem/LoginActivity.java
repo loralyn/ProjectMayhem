@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,6 +28,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ import java.util.List;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -214,19 +216,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // perform the user login attempt.
             showProgress(true);
 
-            // Compare entered values to saved values
-            Log.d("email", mEmail.getText().toString());
-            Log.d("saved email", savedEmail);
-            Log.d("password", mPassword.getText().toString());
-            Log.d("saved password", savedPassword);
-            if (mEmail.getText().toString().equals(savedEmail) && mPassword.getText().toString().equals(savedPassword)) {
+            if (mEmail.getText().toString().equals(savedEmail)
+                    && mPassword.getText().toString().equals(savedPassword)) {
                 // If login is successful, switch to MyAccount
                 showProgress(false);
+
+                Toast.makeText(this, mEmail.getText().toString()
+                        + " has signed in!", Toast.LENGTH_SHORT).show();
+
                 Intent accountIntent = new Intent(this, MyAccount.class);
                 startActivity(accountIntent);
             } else {
                 showProgress(false);
-                Log.d("password_incorrect", "INVALID LOGIN");
+
+                Toast.makeText(this, "Invalid email and/or password.", Toast.LENGTH_SHORT).show();
+
                 onCreate(instanceState);
             }
         }
