@@ -58,6 +58,7 @@ public class RegistrationActivity extends ActionBarActivity {
 
     /**
      * onCreate creates the RegistrationActivity.
+     *
      * @param savedInstanceState
      */
     @Override

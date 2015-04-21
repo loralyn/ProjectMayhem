@@ -26,6 +26,7 @@ public class AgreementActivity extends Activity {
 
     /**
      * onCreate method creates AgreementActivity
+     *
      * @param savedInstanceState
      */
     @Override

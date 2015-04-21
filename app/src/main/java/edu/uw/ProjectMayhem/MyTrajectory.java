@@ -17,11 +17,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class MyTrajectory extends FragmentActivity {
 
-    /** map used for placeholder at the moment for my trajectory activity. */
+    /**
+     * map used for placeholder at the moment for my trajectory activity.
+     */
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     /**
      * onCreate method creates the MyTrajectory activity.
+     *
      * @param savedInstanceState
      */
     @Override

@@ -64,14 +64,19 @@ public class ResetActivity extends ActionBarActivity {
      */
     private String currentEmail;
 
-    /** contains the shared preferences. */
+    /**
+     * contains the shared preferences.
+     */
     private SharedPreferences prefs;
 
-    /** The savedInstance of the user. */
+    /**
+     * The savedInstance of the user.
+     */
     private Bundle savedInstance;
 
     /**
      * onCreate method creates the Reset Activity.
+     *
      * @param savedInstanceState
      */
     @Override

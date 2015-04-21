@@ -109,6 +109,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
     /**
      * onCreate method creates the LoginActivity.
+     *
      * @param savedInstanceState
      */
     @Override
