@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.app.Activity;
@@ -11,12 +14,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
+/**
+ * Agreement Activity page generation.
+ */
 public class AgreementActivity extends Activity {
 
-    /** True if the user has already agreed to the terms. Otherwise false. */
+    /**
+     * True if the user has already agreed to the terms. Otherwise false.
+     */
     private boolean hasAgreed;
 
+    /**
+     * onCreate method creates AgreementActivity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +63,9 @@ public class AgreementActivity extends Activity {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -60,7 +73,9 @@ public class AgreementActivity extends Activity {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

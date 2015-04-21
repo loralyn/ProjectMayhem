@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import java.io.Serializable;
@@ -7,30 +10,41 @@ import java.io.Serializable;
  */
 public final class User implements Serializable {
 
-    /** Unique ID for the user. */
+    /**
+     * Unique ID for the user.
+     */
     private String mUserID;
 
-    /** The user's email address. */
+    /**
+     * The user's email address.
+     */
     private String mEmail;
 
-    /** The user's passsword. */
+    /**
+     * The user's passsword.
+     */
     private String mPassword;
 
-    /** The selected security question. */
+    /**
+     * The selected security question.
+     */
     private String mSecurityQuestion;
 
-    /** The answer for the security question. */
+    /**
+     * The answer for the security question.
+     */
     private String mSecurityAnswer;
 
     /**
      * Constructs a user with the given id, email, password, security question, and security answer.
-     * @param id the unique ID for the user
-     * @param email the user's email address
+     *
+     * @param id       the unique ID for the user
+     * @param email    the user's email address
      * @param password the user's password
      * @param question the user's security question
-     * @param answer the answer to the security question
+     * @param answer   the answer to the security question
      */
-    public User(String id,String email,String password,String question, String answer) {
+    public User(String id, String email, String password, String question, String answer) {
 
         mUserID = id;
         mEmail = email;
@@ -60,14 +74,18 @@ public final class User implements Serializable {
         return mSecurityQuestion;
     }
 
-    /** To DO */
+    /**
+     * To DO
+     */
     public void saveUserInfo() {
 
     }
 
 
-    /** TO DO */
-    public void clearUserInfo()  {
+    /**
+     * TO DO
+     */
+    public void clearUserInfo() {
 
     }
 

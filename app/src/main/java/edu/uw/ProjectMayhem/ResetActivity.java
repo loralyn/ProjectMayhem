@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.app.Activity;
@@ -21,33 +24,56 @@ import android.widget.Toast;
  */
 public class ResetActivity extends ActionBarActivity {
 
-    /** Displays the user's security question. */
+    /**
+     * Displays the user's security question.
+     */
     private TextView mQuestion;
 
-    /** Where the user types the new password. */
+    /**
+     * Where the user types the new password.
+     */
     private EditText mNewPassword;
 
-    /** Where the user types a ccnfirmed password. */
+    /**
+     * Where the user types a ccnfirmed password.
+     */
     private EditText mConfirmPassword;
 
-    /** Where the user types in email address. */
+    /**
+     * Where the user types in email address.
+     */
     private EditText mEmail;
 
-    /** Where user enters the answer for his/her security question. */
+    /**
+     * Where user enters the answer for his/her security question.
+     */
     private EditText mAnswer;
 
-    /** Initiates the reset password process. */
+    /**
+     * Initiates the reset password process.
+     */
     private Button mResetButton;
 
-    /** Stores a saved answer to the security question */
+    /**
+     * Stores a saved answer to the security question
+     */
     private String savedAnswer;
 
-    /** Stores a saved user email. */
+    /**
+     * Stores a saved user email.
+     */
     private String currentEmail;
 
+    /** contains the shared preferences. */
     private SharedPreferences prefs;
+
+    /** The savedInstance of the user. */
     private Bundle savedInstance;
 
+    /**
+     * onCreate method creates the Reset Activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +108,7 @@ public class ResetActivity extends ActionBarActivity {
 
     /**
      * Attempts to reset the user's password.
+     *
      * @param view the view context of widget calling this method.
      */
     private void reset(View view) {
