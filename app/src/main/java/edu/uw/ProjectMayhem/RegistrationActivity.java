@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.content.Intent;
@@ -18,27 +21,46 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-
+/**
+ * RegistractionActivity is the activity for the registration of the app.
+ */
 public class RegistrationActivity extends ActionBarActivity {
 
-    /** Used to generate unique user ID. */
+    /**
+     * Used to generate unique user ID.
+     */
     private static String uid = "1";
 
-    /** The newly registered user. */
+    /**
+     * The newly registered user.
+     */
     private User mUser;
 
-    /** Where user types in email. */
+    /**
+     * Where user types in email.
+     */
     private EditText mEmailText;
 
-    /** Where user types in password. */
+    /**
+     * Where user types in password.
+     */
     private EditText mPasswordText;
 
-    /** Stores all possible security questions. */
+    /**
+     * Stores all possible security questions.
+     */
     private Spinner mSecuritySpinner;
 
-    /** Where user types in answer to security question. */
+    /**
+     * Where user types in answer to security question.
+     */
     private EditText mAnswerText;
 
+    /**
+     * onCreate creates the RegistrationActivity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,21 +129,27 @@ public class RegistrationActivity extends ActionBarActivity {
         startActivity(loginIntent);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putSerializable("user", mUser);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mUser = (User) savedInstanceState.getSerializable("user");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -129,7 +157,9 @@ public class RegistrationActivity extends ActionBarActivity {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

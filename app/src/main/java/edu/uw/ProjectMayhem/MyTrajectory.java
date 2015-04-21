@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.content.Intent;
@@ -9,11 +12,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/** Displays the user's trajectory information. */
+/**
+ * Displays the user's trajectory information.
+ */
 public class MyTrajectory extends FragmentActivity {
 
+    /**
+     * map used for placeholder at the moment for my trajectory activity.
+     */
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
+    /**
+     * onCreate method creates the MyTrajectory activity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +37,9 @@ public class MyTrajectory extends FragmentActivity {
         setUpMapIfNeeded();
     }
 
+    /**
+     * Sets onResume() functionality.
+     */
     @Override
     protected void onResume() {
         super.onResume();

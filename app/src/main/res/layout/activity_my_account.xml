@@ -10,34 +10,39 @@
     android:background="#ff97d992">
 
 
-    <ScrollView android:id="@+id/login_form"
+    <ScrollView
+        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout android:id="@+id/email_login_form"
+        <LinearLayout
+            android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText android:id="@+id/start_date"
+            <EditText
+                android:id="@+id/start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/start_hint"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="20sp"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp" />
 
-            <EditText android:id="@+id/end_date"
+            <EditText
+                android:id="@+id/end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/end_hint"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="20sp"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp" />
 
-            <Button android:id="@+id/trajectory_button"
+            <Button
+                android:id="@+id/trajectory_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +51,7 @@
                 android:textStyle="bold"
                 android:background="#ff000000"
                 android:textColor="#ff97d992"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
         </LinearLayout>
     </ScrollView>

@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.content.Intent;
@@ -8,10 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-/** Displays the user's account information. */
+/**
+ * Displays the user's account information.
+ */
 public class MyAccount extends ActionBarActivity {
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +35,17 @@ public class MyAccount extends ActionBarActivity {
         });
     }
 
-    /** Transitions to the trajectory screen. */
+    /**
+     * Transitions to the trajectory screen.
+     */
     private void myTrajectory(View view) {
         Intent trajectoryIntent = new Intent(this, MyTrajectory.class);
         startActivity(trajectoryIntent);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -42,7 +53,9 @@ public class MyAccount extends ActionBarActivity {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
