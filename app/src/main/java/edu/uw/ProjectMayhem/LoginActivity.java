@@ -102,8 +102,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         savedAnswer = prefs.getString("answer", "no default");
         savedQuestion = prefs.getString("security", "no default");
 
-        Log.d("saved password", prefs.getString("password", "no default"));
-
         // Set up the login form.
         mEmail = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
