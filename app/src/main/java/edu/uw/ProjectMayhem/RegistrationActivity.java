@@ -1,7 +1,10 @@
 package edu.uw.ProjectMayhem;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
@@ -14,9 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class RegistrationActivity extends ActionBarActivity {
@@ -33,6 +41,9 @@ public class RegistrationActivity extends ActionBarActivity {
     /** Where user types in password. */
     private EditText mPasswordText;
 
+    /** Password confirmation. */
+    private EditText mConfirmPasswordText;
+
     /** Stores all possible security questions. */
     private Spinner mSecuritySpinner;
 
@@ -46,6 +57,7 @@ public class RegistrationActivity extends ActionBarActivity {
 
         mEmailText = (EditText) findViewById(R.id.email);
         mPasswordText = (EditText) findViewById(R.id.password);
+        mConfirmPasswordText = (EditText) findViewById(R.id.password_confirm);
         mAnswerText = (EditText) findViewById(R.id.answer_field);
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -66,22 +78,61 @@ public class RegistrationActivity extends ActionBarActivity {
              */
             @Override
             public void onClick(View v) {
-                mUser = new User(uid, mEmailText.getText().toString(), mPasswordText.getText().toString(),
-                        mAnswerText.getText().toString(), mAnswerText.getText().toString());
+
+                final View theView = v;
 
                 // we need error checking eventually //////////////////////////////////////////////
 
-                final SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("email", mEmailText.getText().toString());
-                editor.putString("password", mPasswordText.getText().toString());
-                editor.putString("answer", mAnswerText.getText().toString());
-                editor.putString("security", mSecuritySpinner.getSelectedItem().toString());
-                editor.apply();
+                if (!isEmailValid(mEmailText.getText().toString())) {
 
-                Toast.makeText(RegistrationActivity.this,
-                        "Registration successful!", Toast.LENGTH_SHORT).show();
+                    mEmailText.setError("Not a valid email.");
+                    mEmailText.requestFocus();
 
-                login(v);
+                } else if (!isPasswordValid(mPasswordText.getText().toString())) {
+
+                    mPasswordText.setError("The password is too short.");
+                    mPasswordText.requestFocus();
+
+                } else if (!mPasswordText.getText().toString().equals(mConfirmPasswordText.getText().toString())) {
+
+                    mConfirmPasswordText.setError("Passwords don't match!");
+                    mConfirmPasswordText.requestFocus();
+
+                } else if (!isAnswerValid(mAnswerText.getText().toString())) {
+
+                    mAnswerText.setError("Please enter an answer.");
+                    mAnswerText.requestFocus();
+
+                } else {
+
+                    mUser = new User(uid, mEmailText.getText().toString(), mPasswordText.getText().toString(),
+                            mSecuritySpinner.getSelectedItem().toString(), mAnswerText.getText().toString());
+
+                    // Display agreement, and only register to server if agreed, else exit
+
+                    AlertDialog.Builder agreement = new AlertDialog.Builder(RegistrationActivity.this);
+                    agreement
+                            .setTitle("User Agreement")
+                            .setMessage(R.string.agreement_terms)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("I Agree", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface agreement, int which) {
+                                    // Register to server
+                                    RegisterWebTask task = new RegisterWebTask();
+                                    task.execute();
+
+                                    Toast.makeText(RegistrationActivity.this,
+                                            "Registration successful!", Toast.LENGTH_SHORT).show();
+                                    login(theView);
+                                }
+                            })
+                            .setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface agreement, int which) {
+                                    System.exit(0);
+                                }
+                            })
+                            .show();
+                }
             }
         });
 
@@ -99,15 +150,32 @@ public class RegistrationActivity extends ActionBarActivity {
     }
 
     /**
-     * Attempts a user login.
+     * Goes to login page.
      */
     private void login(View view) {
         Intent loginIntent = new Intent(this, LoginActivity.class);
-        finish();
         startActivity(loginIntent);
+        finish();
     }
 
     /** {@inheritDoc} */
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 4;
+    }
+
+    /** {@inheritDoc} */
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        return email.contains("@");
+    }
+
+    private boolean isAnswerValid(String answer) {
+        //TODO: Replace this with your own logic
+        return answer.length() > 0;
+    }
+
+        /** {@inheritDoc} */
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
@@ -161,5 +229,73 @@ public class RegistrationActivity extends ActionBarActivity {
         editor.apply();
 
         super.onDestroy();
+    }
+
+    /**
+     * Registers the new user to the web server.
+     */
+    private class RegisterWebTask extends AsyncTask<String, Void, String> {
+
+        /** Register URL */
+        private String webURL = "http://cssgate.insttech.washington.edu/~_450team3/register.php";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            HttpURLConnection connection;
+            OutputStreamWriter request = null;
+
+            URL url = null;
+            String response = null;
+            String parameters = ("access=" + "66E2094E"
+                                  +"&email=" + mUser.getEmail()
+                                  +"&pass=" + mUser.getPwHash()
+                                  +"&salt=" + mUser.getSalt()
+                                  +"&q=" + mUser.getSecurityQuestion()
+                                  +"&a=" + mUser.getSecurityAnswer());
+            try
+            {
+                url = new URL(webURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestMethod("POST");
+
+                request = new OutputStreamWriter(connection.getOutputStream());
+                request.write(parameters);
+                request.flush();
+                request.close();
+                String line = "";
+                InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+                BufferedReader reader = new BufferedReader(isr);
+                StringBuilder sb = new StringBuilder();
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                // Response from server after login process will be stored in response variable.
+                response = sb.toString();
+                // You can perform UI operations here
+                isr.close();
+                reader.close();
+
+            }
+            catch(IOException e)
+            {
+                System.err.println("Something bad happened");
+            }
+
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
     }
 }

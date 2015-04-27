@@ -3,7 +3,6 @@ package edu.uw.ProjectMayhem;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -30,6 +29,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,7 +176,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
      */
     public void attemptLogin() {
 
-        System.err.println("ATTEMPING LOGIN");
+        Log.d("login", "ATTEMPING LOGIN");
         if (mAuthTask != null) {
             return;
         }
@@ -187,14 +192,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-            /*
-            // Check for a valid password, if the user entered one.
+        // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPassword.setError(getString(R.string.error_invalid_password));
             focusView = mPassword;
             cancel = true;
         }
-        */
+
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
@@ -208,33 +212,30 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
 
         if (cancel) {
+
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
+
         } else {
-            // Show a progress spinner, and kick off a background task to
+
+            // Kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            UserLoginTask task = new UserLoginTask(mEmail.getText().toString(), mPassword.getText().toString());
+            task.execute();
 
-            if (mEmail.getText().toString().equals(savedEmail)
-                    && mPassword.getText().toString().equals(savedPassword)) {
-                // If login is successful, switch to MyAccount
-                showProgress(false);
-
-                Toast.makeText(this, mEmail.getText().toString()
-                        + " has signed in!", Toast.LENGTH_SHORT).show();
-
-                Intent accountIntent = new Intent(this, MyAccount.class);
-                startActivity(accountIntent);
-            } else {
-                showProgress(false);
-
-                Toast.makeText(this, "Invalid email and/or password.", Toast.LENGTH_SHORT).show();
-
-                // this was causing the app to crash
-                // onCreate(instanceState);
-            }
         }
+    }
+
+    private void doLogin() {
+        // If login is successful, switch to MyAccount
+        showProgress(false);
+
+        Toast.makeText(this, mEmail.getText().toString()
+                + " has signed in!", Toast.LENGTH_SHORT).show();
+
+        Intent accountIntent = new Intent(this, MyAccount.class);
+        startActivity(accountIntent);
     }
 
     /** {@inheritDoc} */
@@ -347,62 +348,133 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         /** The user's email. */
-        private final String mEmail;
+        private final String mUserEmail;
 
         /** The user's password. */
-        private final String mPassword;
+        private final String mUserPassword;
+
+        /** URL address of login PHP page. */
+        private final String webURL = "http://cssgate.insttech.washington.edu/~_450team3/login.php";
 
         UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+            mUserEmail = email;
+            mUserPassword = password;
         }
 
         /** {@inheritDoc} */
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected void onPreExecute() {
+            showProgress(true);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected String doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            String result = "";
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+            HttpURLConnection connection;
+            OutputStreamWriter request = null;
+
+            URL url = null;
+            String response = null;
+            String parameters = "email=" + mUserEmail;
+
+            try
+            {
+                url = new URL(webURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setRequestMethod("POST");
+
+                request = new OutputStreamWriter(connection.getOutputStream());
+                request.write(parameters);
+                request.flush();
+                request.close();
+
+                InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+                BufferedReader reader = new BufferedReader(isr);
+                String savedPass = reader.readLine();
+                String savedSalt = reader.readLine();
+
+                // Response from server after login process will be stored in response variable.
+                System.out.println("Saved password: " + savedPass);
+                System.out.println("Saved salt: " + savedSalt);
+
+                if (savedPass.equals("") && savedSalt.equals("")) {
+
+                    System.out.println("Unknown email!");
+                    result = "bad_email";
+
+                } else {
+
+                    // Hash the entered password using the salt and compare to saved password.
+                    String enteredPass = BCrypt.hashpw(mUserPassword, savedSalt);
+
+                    if (enteredPass.equals(savedPass)) {
+
+                        System.out.println("Hashes are equal!");
+                        result = "success";
+
+                    } else {
+
+                        System.out.println("Passwords don't match!");
+                        result = "bad_password";
+
+                    }
+
                 }
+
+                // You can perform UI operations here
+                isr.close();
+                reader.close();
+
+            }
+            catch(IOException e)
+            {
+                System.err.println("Something bad happened");
             }
 
             // TODO: register the new account here.
-            return true;
+            return result;
         }
 
         /** {@inheritDoc} */
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final String success) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            if (success.equals("success")) {
+
+                doLogin();
                 finish();
+
+            } else if (success.equals("bad_email")) {
+
+                mEmail.setError(getString(R.string.unknown_email));
+                mEmail.requestFocus();
+
             } else {
-//                mPassword.setError(getString(R.string.error_incorrect_password));
-//                mPassword.requestFocus();
+
+                mPassword.setError(getString(R.string.error_incorrect_password));
+                mPassword.requestFocus();
+
             }
         }
 
         /** {@inheritDoc} */
         @Override
         protected void onCancelled() {
+
             mAuthTask = null;
             showProgress(false);
+
         }
     }
 }
