@@ -1,4 +1,4 @@
-package com.example.jacob.myapplication;
+package edu.uw.ProjectMayhem;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -9,22 +9,26 @@
     android:background="#ff97d992">
 
     <!-- Login progress -->
-    <ProgressBar android:id="@+id/login_progress"
+    <ProgressBar
+        android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <ScrollView android:id="@+id/login_form"
+    <ScrollView
+        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout android:id="@+id/email_login_form"
+        <LinearLayout
+            android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <AutoCompleteTextView android:id="@+id/email"
+            <AutoCompleteTextView
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
@@ -39,7 +43,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/sec_question" />
 
-            <EditText android:id="@+id/security_answer"
+            <EditText
+                android:id="@+id/security_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/answer_hint"
@@ -51,7 +56,8 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
-            <EditText android:id="@+id/new_password"
+            <EditText
+                android:id="@+id/new_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -60,15 +66,18 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
-            <EditText android:id="@+id/confirm_password"
-                 android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:inputType="textPassword"
                 android:hint="@string/confirm_pw"
-                android:maxLines="1" android:singleLine="true" />
+                android:maxLines="1"
+                android:singleLine="true" />
 
-            <Button android:id="@+id/reset_password"
+            <Button
+                android:id="@+id/reset_password"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,7 +87,7 @@
                 android:textSize="25sp"
                 android:textColor="#ff97d992"
                 android:background="#ff000000"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </LinearLayout>
     </ScrollView>
