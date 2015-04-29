@@ -6,6 +6,7 @@ package edu.uw.ProjectMayhem;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -17,6 +18,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -138,5 +155,70 @@ public class ResetActivity extends ActionBarActivity {
         }
 
     }
+
+    /**
+     * Running the loading of the JSON in a separate thread.
+     * Code adapted from http://www.vogella.com/tutorials/AndroidBackgroundProcessing/article.html
+     */
+    /*
+    private class DownloadWebPageTask extends AsyncTask<Void, Void, String> {
+
+
+        private final String url = "450.atwebpages.com/reset.php";
+
+        @Override
+        protected void onPreExecute() {
+            //super.onPreExecute();
+            //mProgressDialog = ProgressDialog.show(CourseListActivity.this, "Wait", "Downloading...");
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String response = "";
+                DefaultHttpClient client = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet();
+                httpGet.setParams();
+                try {
+                    HttpResponse execute = client.execute(httpGet);
+                    InputStream content = execute.getEntity().getContent();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //mProgressDialog.dismiss();
+            mCourses = result;
+            if (mCourses != null) {
+                try {
+                    JSONArray arr = new JSONArray(mCourses);
+
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = arr.getJSONObject(i);
+                        Course course = new Course(obj.getString(Course.ID), obj.getString(Course.SHORT_DESC)
+                                , obj.getString(Course.LONG_DESC), obj.getString(Course.PRE_REQS));
+                        mCourseList.add(course);
+                    }
+                } catch (JSONException e) {
+                    System.out.println("JSON Exception");
+                }
+
+            }
+
+            if (!mCourseList.isEmpty()) {
+                mCoursesListView.setAdapter(mAdapter);
+            }
+        }
+    }
+    */
 
 }

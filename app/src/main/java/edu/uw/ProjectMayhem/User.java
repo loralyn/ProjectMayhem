@@ -23,10 +23,10 @@ public final class User implements Serializable {
     private String mSecurityAnswer;
 
     /** Salt for the new password (used for hashing). */
-    private String salt = BCrypt.gensalt();
+    //private String salt = BCrypt.gensalt();
 
     /** The bcrypt hash of the new password (for secure transmission). */
-    private String pwHash;
+    //private String pwHash;
 
     /**
      * Constructs a user with the given id, email, password, security question, and security answer.
@@ -43,7 +43,7 @@ public final class User implements Serializable {
         mPassword = password;
         mSecurityQuestion = question;
         mSecurityAnswer = answer;
-        pwHash = BCrypt.hashpw(password, salt);
+       //pwHash = BCrypt.hashpw(password, salt);
     }
 
     /**
@@ -77,16 +77,16 @@ public final class User implements Serializable {
     /**
      * @return the hash of the password.
      */
-    public String getPwHash() {
-        return pwHash;
-    }
+    //public String getPwHash() {
+    //    return pwHash;
+    //}
 
     /**
      * @return the salt used to hash the password.
-     */
     public String getSalt() {
         return salt;
     }
+    */
 
     /** To DO */
     public void saveUserInfo() {

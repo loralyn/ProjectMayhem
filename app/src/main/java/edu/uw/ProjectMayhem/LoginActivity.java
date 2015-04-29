@@ -412,7 +412,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 } else {
 
                     // Hash the entered password using the salt and compare to saved password.
-                    String enteredPass = BCrypt.hashpw(mUserPassword, savedSalt);
+                    String enteredPass = mUserPassword;
 
                     if (enteredPass.equals(savedPass)) {
 

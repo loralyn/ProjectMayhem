@@ -61,9 +61,6 @@ public class RegistrationActivity extends ActionBarActivity {
         mAnswerText = (EditText) findViewById(R.id.answer_field);
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        final String theEmail = prefs.getString("email", mEmailText.getText().toString());
-
-        mEmailText.setText(theEmail.toString());
 
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.security_questions, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -252,12 +249,16 @@ public class RegistrationActivity extends ActionBarActivity {
 
             URL url = null;
             String response = null;
+            String parameters = "email=";
+
+            /*
             String parameters = ("access=" + "66E2094E"
                                   +"&email=" + mUser.getEmail()
                                   +"&pass=" + mUser.getPwHash()
                                   +"&salt=" + mUser.getSalt()
                                   +"&q=" + mUser.getSecurityQuestion()
                                   +"&a=" + mUser.getSecurityAnswer());
+                                  */
             try
             {
                 url = new URL(webURL);
