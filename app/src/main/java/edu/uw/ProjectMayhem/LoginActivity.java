@@ -29,10 +29,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -219,9 +221,38 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
             // Kick off a background task to
             // perform the user login attempt.
-            UserLoginTask task = new UserLoginTask(mEmail.getText().toString(), mPassword.getText().toString());
+            UserLoginTask task = new UserLoginTask();
             task.execute();
+            String response = "";
 
+            try {
+                response = task.get();
+            } catch (Exception e) {
+                System.err.println("Something bad happened");
+            }
+
+            System.out.println("response: " + response);
+
+            if (response != null) {
+                try {
+
+                    JSONObject o = new JSONObject(response);
+
+                    System.out.println("Response: " + o.get("result"));
+
+                    if(o.get("result").equals("success")) {
+                        doLogin();
+                    } else {
+                        showProgress(false);
+                        Toast.makeText(this, o.get("error").toString(), Toast.LENGTH_LONG).show();
+                        System.out.println("Error: " + o.get("error"));
+                    }
+
+                } catch (JSONException e) {
+                    System.out.println("JSON Exception " + e);
+                }
+
+            }
         }
     }
 
@@ -348,19 +379,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
-        /** The user's email. */
-        private final String mUserEmail;
-
-        /** The user's password. */
-        private final String mUserPassword;
-
-        /** URL address of login PHP page. */
-        private final String webURL = "http://cssgate.insttech.washington.edu/~_450team3/login.php";
-
-        UserLoginTask(String email, String password) {
-            mUserEmail = email;
-            mUserPassword = password;
-        }
+        private String webURL = "http://450.atwebpages.com/login.php";
 
         /** {@inheritDoc} */
         @Override
@@ -371,64 +390,28 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         /** {@inheritDoc} */
         @Override
         protected String doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             String result = "";
 
             HttpURLConnection connection;
-            OutputStreamWriter request = null;
 
             URL url = null;
             String response = null;
-            String parameters = "email=" + mUserEmail;
-
+            String parameters = ("?email=" + mEmail.getText().toString()
+                                +"&password=" + mPassword.getText().toString());
             try
             {
-                url = new URL(webURL);
+                url = new URL(webURL + parameters);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setRequestMethod("POST");
-
-                request = new OutputStreamWriter(connection.getOutputStream());
-                request.write(parameters);
-                request.flush();
-                request.close();
+                connection.setRequestMethod("GET");
 
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream());
                 BufferedReader reader = new BufferedReader(isr);
-                String savedPass = reader.readLine();
-                String savedSalt = reader.readLine();
 
-                // Response from server after login process will be stored in response variable.
-                System.out.println("Saved password: " + savedPass);
-                System.out.println("Saved salt: " + savedSalt);
+                result = reader.readLine();
 
-                if (savedPass.equals("") && savedSalt.equals("")) {
-
-                    System.out.println("Unknown email!");
-                    result = "bad_email";
-
-                } else {
-
-                    // Hash the entered password using the salt and compare to saved password.
-                    String enteredPass = mUserPassword;
-
-                    if (enteredPass.equals(savedPass)) {
-
-                        System.out.println("Hashes are equal!");
-                        result = "success";
-
-                    } else {
-
-                        System.out.println("Passwords don't match!");
-                        result = "bad_password";
-
-                    }
-
-                }
-
-                // You can perform UI operations here
                 isr.close();
                 reader.close();
 
@@ -438,32 +421,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 System.err.println("Something bad happened");
             }
 
-            // TODO: register the new account here.
             return result;
         }
 
         /** {@inheritDoc} */
         @Override
-        protected void onPostExecute(final String success) {
-            mAuthTask = null;
-            showProgress(false);
+        protected void onPostExecute(final String result) {
 
-            if (success.equals("success")) {
-
-                doLogin();
-                finish();
-
-            } else if (success.equals("bad_email")) {
-
-                mEmail.setError(getString(R.string.unknown_email));
-                mEmail.requestFocus();
-
-            } else {
-
-                mPassword.setError(getString(R.string.error_incorrect_password));
-                mPassword.requestFocus();
-
-            }
         }
 
         /** {@inheritDoc} */

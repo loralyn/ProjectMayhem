@@ -19,12 +19,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 
 public class RegistrationActivity extends ActionBarActivity {
@@ -118,9 +122,39 @@ public class RegistrationActivity extends ActionBarActivity {
                                     RegisterWebTask task = new RegisterWebTask();
                                     task.execute();
 
-                                    Toast.makeText(RegistrationActivity.this,
-                                            "Registration successful!", Toast.LENGTH_SHORT).show();
-                                    login(theView);
+                                    String response = "";
+
+                                    try {
+                                        response = task.get();
+                                    } catch (Exception e) {
+                                        System.out.println("Something bad happened");
+                                    }
+
+                                    System.out.println("Response: " + response);
+
+                                    if (response != null) {
+                                        try {
+
+                                            JSONObject o = new JSONObject(response);
+
+                                            System.out.println("Response: " + o.get("result"));
+
+                                            if (o.get("result").equals("success")) {
+                                                Toast.makeText(RegistrationActivity.this,
+                                                        ("Registration successful!" + o.get("message")), Toast.LENGTH_LONG).show();
+                                                login(theView);
+                                            } else {
+                                                //showProgress(false);
+                                                Toast.makeText(RegistrationActivity.this, o.get("error").toString(), Toast.LENGTH_LONG).show();
+                                                System.out.println("Error: " + o.get("error"));
+                                            }
+
+                                        } catch (JSONException e) {
+                                            System.out.println("JSON Exception " + e);
+                                        }
+
+                                    }
+
                                 }
                             })
                             .setNegativeButton("Decline", new DialogInterface.OnClickListener() {
@@ -234,7 +268,7 @@ public class RegistrationActivity extends ActionBarActivity {
     private class RegisterWebTask extends AsyncTask<String, Void, String> {
 
         /** Register URL */
-        private String webURL = "http://cssgate.insttech.washington.edu/~_450team3/register.php";
+        private String webURL = "http://450.atwebpages.com/adduser.php";
 
         @Override
         protected void onPreExecute() {
@@ -244,54 +278,50 @@ public class RegistrationActivity extends ActionBarActivity {
         @Override
         protected String doInBackground(String... urls) {
 
+            String res = null;
+            String encodedQuestion = "";
+            String encodedAnswer = "";
+
+            try {
+                encodedQuestion = URLEncoder.encode(mSecuritySpinner.getSelectedItem().toString(), "UTF-8");
+                encodedAnswer = URLEncoder.encode(mAnswerText.getText().toString(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                System.out.println("Error: unsupported encoding");
+            }
+
+            String result = "";
+
             HttpURLConnection connection;
-            OutputStreamWriter request = null;
 
             URL url = null;
             String response = null;
-            String parameters = "email=";
-
-            /*
-            String parameters = ("access=" + "66E2094E"
-                                  +"&email=" + mUser.getEmail()
-                                  +"&pass=" + mUser.getPwHash()
-                                  +"&salt=" + mUser.getSalt()
-                                  +"&q=" + mUser.getSecurityQuestion()
-                                  +"&a=" + mUser.getSecurityAnswer());
-                                  */
+            String parameters = ("?email=" + mEmailText.getText().toString()
+                                + "&password=" + mPasswordText.getText().toString())
+                                + "&question=" + encodedQuestion
+                                + "&answer=" + encodedAnswer;
             try
             {
-                url = new URL(webURL);
+                url = new URL(webURL + parameters);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setRequestMethod("POST");
+                connection.setRequestMethod("GET");
 
-                request = new OutputStreamWriter(connection.getOutputStream());
-                request.write(parameters);
-                request.flush();
-                request.close();
-                String line = "";
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream());
                 BufferedReader reader = new BufferedReader(isr);
-                StringBuilder sb = new StringBuilder();
-                while ((line = reader.readLine()) != null)
-                {
-                    sb.append(line + "\n");
-                }
-                // Response from server after login process will be stored in response variable.
-                response = sb.toString();
-                // You can perform UI operations here
+
+                result = reader.readLine();
+
                 isr.close();
                 reader.close();
 
             }
             catch(IOException e)
             {
-                System.err.println("Something bad happened");
+                System.err.println("Something bad happened in sending HTTP GET request");
             }
 
-            return response;
+            return result;
         }
 
         @Override
