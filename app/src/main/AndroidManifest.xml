@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015. Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto.
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.uw.ProjectMayhem" >
+    package="edu.uw.ProjectMayhem">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -22,12 +26,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".LoginActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,29 +40,26 @@
 
         <activity
             android:name=".RegistrationActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_registration" >
-        </activity>
+            android:label="@string/title_activity_registration"
+            android:windowSoftInputMode="stateHidden"></activity>
 
         <activity
             android:name=".MyAccount"
-            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_my_account"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_my_account" >
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
 
         <activity
             android:name=".ResetActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_reset">
+            android:label="@string/title_activity_reset"
+            android:windowSoftInputMode="stateHidden">
 
-          </activity>
+        </activity>
 
         <activity
             android:name=".MyTrajectory"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_my_trajectory" >
-        </activity>
+            android:label="@string/title_activity_my_trajectory"
+            android:screenOrientation="portrait"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

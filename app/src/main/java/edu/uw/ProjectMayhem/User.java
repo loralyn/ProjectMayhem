@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto.
+ */
+
 /**
  * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
  */
@@ -10,19 +14,29 @@ import java.io.Serializable;
  */
 public final class User implements Serializable {
 
-    /** Unique ID for the user. */
+    /**
+     * Unique ID for the user.
+     */
     private String mUserID;
 
-    /** The user's email address. */
+    /**
+     * The user's email address.
+     */
     private String mEmail;
 
-    /** The user's passsword. */
+    /**
+     * The user's passsword.
+     */
     private String mPassword;
 
-    /** The selected security question. */
+    /**
+     * The selected security question.
+     */
     private String mSecurityQuestion;
 
-    /** The answer for the security question. */
+    /**
+     * The answer for the security question.
+     */
     private String mSecurityAnswer;
 
     /** Salt for the new password (used for hashing). */
@@ -33,24 +47,26 @@ public final class User implements Serializable {
 
     /**
      * Constructs a user with the given id, email, password, security question, and security answer.
-     * @param id the unique ID for the user
-     * @param email the user's email address
+     *
+     * @param id       the unique ID for the user
+     * @param email    the user's email address
      * @param password the user's password
      * @param question the user's security question
-     * @param answer the answer to the security question
+     * @param answer   the answer to the security question
      */
-    public User(String id,String email,String password,String question, String answer) {
+    public User(String id, String email, String password, String question, String answer) {
 
         mUserID = id;
         mEmail = email;
         mPassword = password;
         mSecurityQuestion = question;
         mSecurityAnswer = answer;
-       //pwHash = BCrypt.hashpw(password, salt);
+        //pwHash = BCrypt.hashpw(password, salt);
     }
 
     /**
      * Retrieves User ID.
+     *
      * @return the user's unique ID.
      */
     public String getUserID() {
@@ -59,6 +75,7 @@ public final class User implements Serializable {
 
     /**
      * Retrieves user email address.
+     *
      * @return the user's email address.
      */
     public String getEmail() {
@@ -67,6 +84,7 @@ public final class User implements Serializable {
 
     /**
      * Retrieves user security question.
+     *
      * @return the user's security question.
      */
     public String getSecurityQuestion() {
@@ -75,6 +93,7 @@ public final class User implements Serializable {
 
     /**
      * Retrieves user security answer.
+     *
      * @return the user's answer to the security question.
      */
     public String getSecurityAnswer() {
@@ -93,18 +112,22 @@ public final class User implements Serializable {
      * Retrieves user's salt
      * @return the salt used to hash the password.
     public String getSalt() {
-        return salt;
+    return salt;
     }
-    */
+     */
 
-    /** To DO */
+    /**
+     * To DO
+     */
     public void saveUserInfo() {
 
     }
 
 
-    /** TO DO */
-    public void clearUserInfo()  {
+    /**
+     * TO DO
+     */
+    public void clearUserInfo() {
 
     }
 
