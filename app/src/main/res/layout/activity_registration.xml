@@ -1,17 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".RegistrationActivity"
-    android:background="#ff97d992">
-
-    <ScrollView
+<ScrollView
         android:id="@+id/register_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".RegistrationActivity"
+        android:background="#ff97d992">
 
         <LinearLayout
             android:id="@+id/email_register_form"
@@ -98,8 +95,5 @@
 
         </LinearLayout>
     </ScrollView>
-
-</LinearLayout>
-
 
 

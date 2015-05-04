@@ -18,15 +18,12 @@ import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -110,17 +107,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         mPassword = (EditText) findViewById(R.id.password);
         mEmail = (AutoCompleteTextView) findViewById(R.id.email);
-
-        mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
 
         mLoginButton = (Button) findViewById(R.id.email_sign_in_button);
         mLoginButton.setOnClickListener(new OnClickListener() {
@@ -270,13 +256,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
     /** {@inheritDoc} */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return (email.contains("@") && email.contains("."));
     }
 
     /** {@inheritDoc} */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 5;
     }
 
     /**

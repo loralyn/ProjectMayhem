@@ -1,25 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context="edu.uw.ProjectMayhem.ResetActivity"
-    android:background="#ff97d992">
-
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    <ScrollView
+<ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context="edu.uw.ProjectMayhem.ResetActivity"
+        android:background="#ff97d992">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -36,46 +25,6 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/sec_question" />
-
-            <EditText
-                android:id="@+id/security_answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/answer_hint"
-                android:layout_marginBottom="10dp"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_reset"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/new_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:inputType="textPassword"
-                android:hint="@string/new_pw"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:inputType="textPassword"
-                android:hint="@string/confirm_pw"
-                android:maxLines="1"
-                android:singleLine="true" />
-
             <Button
                 android:id="@+id/reset_password"
                 style="?android:textAppearanceSmall"
@@ -89,10 +38,5 @@
                 android:background="#ff000000"
                 android:padding="10dp" />
 
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
-
-
-
+    </LinearLayout>
+</ScrollView>
