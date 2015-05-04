@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.animation.Animator;
@@ -86,11 +89,12 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
     /** Saved security question from preferences. */
     private String savedQuestion;
-
+    /** login form view. */
     private View mLoginFormView;
-
+    /** instance state for app. */
     private Bundle instanceState;
 
+    /** onCreate() generates login activity. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +116,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mEmail = (AutoCompleteTextView) findViewById(R.id.email);
 
         mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            /** generates log-in attempt. */
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -256,6 +261,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
+    /** Generates log-in activity and toasts. */
     private void doLogin() {
         // If login is successful, switch to MyAccount
         showProgress(false);

@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.app.IntentService;
@@ -9,11 +12,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
-/**
- * Created by Jacob on 4/29/15.
- */
+/** Creates location information for app. */
 public class LocationServices extends IntentService{
-
+    /** Location services constructor. */
     public LocationServices() {
 
         super("LocationIntent");
@@ -40,7 +41,7 @@ public class LocationServices extends IntentService{
                 0, 0, locationListener);
 
     }
-
+    /** creates intent for Location services. */
     @Override
     protected void onHandleIntent(Intent intent) {
 

@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import java.io.Serializable;
@@ -47,6 +50,7 @@ public final class User implements Serializable {
     }
 
     /**
+     * Retrieves User ID.
      * @return the user's unique ID.
      */
     public String getUserID() {
@@ -54,6 +58,7 @@ public final class User implements Serializable {
     }
 
     /**
+     * Retrieves user email address.
      * @return the user's email address.
      */
     public String getEmail() {
@@ -61,6 +66,7 @@ public final class User implements Serializable {
     }
 
     /**
+     * Retrieves user security question.
      * @return the user's security question.
      */
     public String getSecurityQuestion() {
@@ -68,6 +74,7 @@ public final class User implements Serializable {
     }
 
     /**
+     * Retrieves user security answer.
      * @return the user's answer to the security question.
      */
     public String getSecurityAnswer() {
@@ -75,6 +82,7 @@ public final class User implements Serializable {
     }
 
     /**
+     * Retrieves user's password hash.
      * @return the hash of the password.
      */
     //public String getPwHash() {
@@ -82,6 +90,7 @@ public final class User implements Serializable {
     //}
 
     /**
+     * Retrieves user's salt
      * @return the salt used to hash the password.
     public String getSalt() {
         return salt;

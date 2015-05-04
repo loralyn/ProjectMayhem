@@ -1,3 +1,6 @@
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.app.AlertDialog;
@@ -30,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-
+/** Generates registration activity. */
 public class RegistrationActivity extends ActionBarActivity {
 
     /** Used to generate unique user ID. */
@@ -54,6 +57,7 @@ public class RegistrationActivity extends ActionBarActivity {
     /** Where user types in answer to security question. */
     private EditText mAnswerText;
 
+    /** onCreate() generates RegistrationActivity. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -269,12 +273,12 @@ public class RegistrationActivity extends ActionBarActivity {
 
         /** Register URL */
         private String webURL = "http://450.atwebpages.com/adduser.php";
-
+        /** onPreExecute() constructor. */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
+        /** handles web services activity. */
         @Override
         protected String doInBackground(String... urls) {
 
@@ -323,7 +327,7 @@ public class RegistrationActivity extends ActionBarActivity {
 
             return result;
         }
-
+        /** onPostExecute() constructor. */
         @Override
         protected void onPostExecute(String result) {
 
