@@ -25,10 +25,8 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 
 public class RegistrationActivity extends ActionBarActivity {
@@ -192,7 +190,7 @@ public class RegistrationActivity extends ActionBarActivity {
     /** {@inheritDoc} */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 5;
     }
 
     /** {@inheritDoc} */
@@ -278,23 +276,13 @@ public class RegistrationActivity extends ActionBarActivity {
         @Override
         protected String doInBackground(String... urls) {
 
-            String res = null;
-            String encodedQuestion = "";
-            String encodedAnswer = "";
-
-            try {
-                encodedQuestion = URLEncoder.encode(mSecuritySpinner.getSelectedItem().toString(), "UTF-8");
-                encodedAnswer = URLEncoder.encode(mAnswerText.getText().toString(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Error: unsupported encoding");
-            }
-
+            String encodedQuestion = mSecuritySpinner.getSelectedItem().toString().replaceAll(" ", "%20");
+            String encodedAnswer = mAnswerText.getText().toString().replaceAll(" ", "%20");
             String result = "";
 
             HttpURLConnection connection;
 
             URL url = null;
-            String response = null;
             String parameters = ("?email=" + mEmailText.getText().toString()
                                 + "&password=" + mPasswordText.getText().toString())
                                 + "&question=" + encodedQuestion
