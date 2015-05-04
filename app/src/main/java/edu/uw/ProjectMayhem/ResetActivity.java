@@ -23,7 +23,7 @@ import java.net.URL;
 
 
 /**
- * A screen that allows the user to reset his/her password.
+ * A screen that allows teh user to reset his/her password.
  */
 public class ResetActivity extends ActionBarActivity {
 
