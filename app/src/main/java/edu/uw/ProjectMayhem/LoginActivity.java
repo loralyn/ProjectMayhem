@@ -1,10 +1,3 @@
-/*
- * Copyright (c) 2015. Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto.
- */
-
-/**
- * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
- */
 package edu.uw.ProjectMayhem;
 
 import android.animation.Animator;
@@ -64,67 +57,40 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
-    /**
-     * Where the user types in the email address.
-     */
+    /** Where the user types in the email address. */
     private AutoCompleteTextView mEmail;
 
-    /**
-     * Where the user types in the password.
-     */
+    /** Where the user types in the password. */
     private EditText mPassword;
 
-    /**
-     * Shows progress for signing in.
-     */
+    /** Shows progress for signing in. */
     private View mProgressView;
 
-    /**
-     * Initiates signing a user in.
-     */
+    /** Initiates signing a user in. */
     private Button mLoginButton;
 
-    /**
-     * Switches to the registration screen.
-     */
+    /** Switches to the registration screen. */
     private Button mRegisterButton;
 
-    /**
-     * Switches to the "forgot password" screen.
-     */
+    /** Switches to the "forgot password" screen. */
     private Button mForgotButton;
 
-    /**
-     * Saved email from preferences.
-     */
+    /** Saved email from preferences. */
     private String savedEmail;
 
-    /**
-     * Saved password from preferences.
-     */
+    /** Saved password from preferences. */
     private String savedPassword;
 
-    /**
-     * Saved security answer from preferences.
-     */
+    /** Saved security answer from preferences. */
     private String savedAnswer;
 
-    /**
-     * Saved security question from preferences.
-     */
+    /** Saved security question from preferences. */
     private String savedQuestion;
-    /**
-     * login form view.
-     */
+
     private View mLoginFormView;
-    /**
-     * instance state for app.
-     */
+
     private Bundle instanceState;
 
-    /**
-     * onCreate() generates login activity.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +112,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mEmail = (AutoCompleteTextView) findViewById(R.id.email);
 
         mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            /** generates log-in attempt. */
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -186,25 +151,19 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    /**
-     * Starts the "reset password" screen.
-     */
+    /** Starts the "reset password" screen. */
     private void reset(View view) {
         Intent resetIntent = new Intent(this, ResetActivity.class);
         startActivity(resetIntent);
     }
 
-    /**
-     * Starts the register screen.
-     */
+    /** Starts the register screen. */
     private void register(View view) {
         Intent registerIntent = new Intent(this, RegistrationActivity.class);
         startActivity(registerIntent);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
     }
@@ -281,7 +240,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
                     System.out.println("Response: " + o.get("result"));
 
-                    if (o.get("result").equals("success")) {
+                    if(o.get("result").equals("success")) {
                         doLogin();
                     } else {
                         showProgress(false);
@@ -297,9 +256,6 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-    /**
-     * Generates log-in activity and toasts.
-     */
     private void doLogin() {
         // If login is successful, switch to MyAccount
         showProgress(false);
@@ -311,17 +267,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         startActivity(accountIntent);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
@@ -363,9 +315,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -383,9 +333,7 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         List<String> emails = new ArrayList<String>();
@@ -398,29 +346,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         addEmailsToAutoComplete(emails);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmail.setAdapter(adapter);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -431,6 +363,16 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
+    /** {@inheritDoc} */
+    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(LoginActivity.this,
+                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+
+        mEmail.setAdapter(adapter);
+    }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -439,17 +381,13 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
 
         private String webURL = "http://450.atwebpages.com/login.php";
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         protected void onPreExecute() {
             showProgress(true);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         protected String doInBackground(Void... params) {
 
@@ -460,8 +398,9 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
             URL url = null;
             String response = null;
             String parameters = ("?email=" + mEmail.getText().toString()
-                    + "&password=" + mPassword.getText().toString());
-            try {
+                                +"&password=" + mPassword.getText().toString());
+            try
+            {
                 url = new URL(webURL + parameters);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
@@ -476,24 +415,22 @@ public class LoginActivity extends ActionBarActivity implements LoaderCallbacks<
                 isr.close();
                 reader.close();
 
-            } catch (IOException e) {
+            }
+            catch(IOException e)
+            {
                 System.err.println("Something bad happened");
             }
 
             return result;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         protected void onPostExecute(final String result) {
 
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         protected void onCancelled() {
 

@@ -1,16 +1,12 @@
-<!--
-  ~ Copyright (c) 2015. Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto.
-  -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff97d992"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="edu.uw.ProjectMayhem.ResetActivity">
+    tools:context="edu.uw.ProjectMayhem.ResetActivity"
+    android:background="#ff97d992">
 
     <!-- Login progress -->
     <ProgressBar
@@ -42,17 +38,17 @@
 
 
             <TextView
-                android:id="@+id/sec_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/sec_question" />
 
             <EditText
                 android:id="@+id/security_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:hint="@string/answer_hint"
+                android:layout_marginBottom="10dp"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_reset"
                 android:imeOptions="actionUnspecified"
@@ -65,8 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="@string/new_pw"
                 android:inputType="textPassword"
+                android:hint="@string/new_pw"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -75,8 +71,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="@string/confirm_pw"
                 android:inputType="textPassword"
+                android:hint="@string/confirm_pw"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -86,12 +82,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="#ff000000"
-                android:padding="10dp"
                 android:text="@string/action_reset"
-                android:textColor="#ff97d992"
+                android:textStyle="bold"
                 android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textColor="#ff97d992"
+                android:background="#ff000000"
+                android:padding="10dp" />
 
         </LinearLayout>
     </ScrollView>

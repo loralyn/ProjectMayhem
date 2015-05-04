@@ -17,14 +17,14 @@
         on our part, we will inherit all of your assets. Which also include this phone.</string>
 
     <!-- Strings related to login -->
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">GeoTracker</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Login</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_invalid_password">Password must exceed 5 characters</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="unknown_email">No user with this email</string>
     <string name="error_field_required">This field is required</string>
