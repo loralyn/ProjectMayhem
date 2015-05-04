@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015. Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto.
+ */
+
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.app.IntentService;
@@ -10,10 +17,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 /**
- * Created by Jacob on 4/29/15.
+ * Creates location information for app.
  */
-public class LocationServices extends IntentService{
-
+public class LocationServices extends IntentService {
+    /**
+     * Location services constructor.
+     */
     public LocationServices() {
 
         super("LocationIntent");
@@ -28,11 +37,14 @@ public class LocationServices extends IntentService{
                 Log.i("LOCATION SERVICES", location.toString());
             }
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
 
-            public void onProviderEnabled(String provider) {}
+            public void onProviderEnabled(String provider) {
+            }
 
-            public void onProviderDisabled(String provider) {}
+            public void onProviderDisabled(String provider) {
+            }
         };
 
         // Register the listener with the Location Manager to receive location updates
@@ -41,6 +53,9 @@ public class LocationServices extends IntentService{
 
     }
 
+    /**
+     * creates intent for Location services.
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
 

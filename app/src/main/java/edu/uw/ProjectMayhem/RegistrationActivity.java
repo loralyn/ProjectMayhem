@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015. Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto.
+ */
+
+/**
+ * Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto
+ */
 package edu.uw.ProjectMayhem;
 
 import android.app.AlertDialog;
@@ -30,30 +37,49 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-
+/**
+ * Generates registration activity.
+ */
 public class RegistrationActivity extends ActionBarActivity {
 
-    /** Used to generate unique user ID. */
+    /**
+     * Used to generate unique user ID.
+     */
     private static String uid = "1";
 
-    /** The newly registered user. */
+    /**
+     * The newly registered user.
+     */
     private User mUser;
 
-    /** Where user types in email. */
+    /**
+     * Where user types in email.
+     */
     private EditText mEmailText;
 
-    /** Where user types in password. */
+    /**
+     * Where user types in password.
+     */
     private EditText mPasswordText;
 
-    /** Password confirmation. */
+    /**
+     * Password confirmation.
+     */
     private EditText mConfirmPasswordText;
 
-    /** Stores all possible security questions. */
+    /**
+     * Stores all possible security questions.
+     */
     private Spinner mSecuritySpinner;
 
-    /** Where user types in answer to security question. */
+    /**
+     * Where user types in answer to security question.
+     */
     private EditText mAnswerText;
 
+    /**
+     * onCreate() generates RegistrationActivity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,13 +215,17 @@ public class RegistrationActivity extends ActionBarActivity {
         finish();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
@@ -206,21 +236,27 @@ public class RegistrationActivity extends ActionBarActivity {
         return answer.length() > 0;
     }
 
-        /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putSerializable("user", mUser);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mUser = (User) savedInstanceState.getSerializable("user");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -228,7 +264,9 @@ public class RegistrationActivity extends ActionBarActivity {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -267,14 +305,22 @@ public class RegistrationActivity extends ActionBarActivity {
      */
     private class RegisterWebTask extends AsyncTask<String, Void, String> {
 
-        /** Register URL */
+        /**
+         * Register URL
+         */
         private String webURL = "http://450.atwebpages.com/adduser.php";
 
+        /**
+         * onPreExecute() constructor.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        /**
+         * handles web services activity.
+         */
         @Override
         protected String doInBackground(String... urls) {
 
@@ -296,11 +342,10 @@ public class RegistrationActivity extends ActionBarActivity {
             URL url = null;
             String response = null;
             String parameters = ("?email=" + mEmailText.getText().toString()
-                                + "&password=" + mPasswordText.getText().toString())
-                                + "&question=" + encodedQuestion
-                                + "&answer=" + encodedAnswer;
-            try
-            {
+                    + "&password=" + mPasswordText.getText().toString())
+                    + "&question=" + encodedQuestion
+                    + "&answer=" + encodedAnswer;
+            try {
                 url = new URL(webURL + parameters);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
@@ -315,15 +360,16 @@ public class RegistrationActivity extends ActionBarActivity {
                 isr.close();
                 reader.close();
 
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
                 System.err.println("Something bad happened in sending HTTP GET request");
             }
 
             return result;
         }
 
+        /**
+         * onPostExecute() constructor.
+         */
         @Override
         protected void onPostExecute(String result) {
 

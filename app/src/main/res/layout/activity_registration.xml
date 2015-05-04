@@ -1,12 +1,16 @@
+<!--
+  ~ Copyright (c) 2015. Project Mayhem: Jacob Hohisel, Loralyn Solomon, Brian Plocki, Brandon Soto.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ff97d992"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".RegistrationActivity"
-    android:background="#ff97d992">
+    tools:context=".RegistrationActivity">
 
     <ScrollView
         android:id="@+id/register_form"
@@ -23,40 +27,40 @@
                 android:id="@id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:layout_marginBottom="15dp"
                 android:textSize="25sp" />
 
             <EditText
                 android:id="@id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:layout_marginBottom="15dp"
                 android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
                 android:hint="@string/password_confirm"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Security Question:"
-                android:id="@+id/textView2"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="25sp" />
 
             <Spinner
@@ -65,9 +69,9 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:id="@+id/answer_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/answer_field"
                 android:hint="@string/answer_text"
                 android:textSize="25sp" />
 
@@ -77,11 +81,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_register"
-                android:textStyle="bold"
                 android:background="#ff000000"
+                android:text="@string/action_register"
                 android:textColor="#ff97d992"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/email_sign_in_button"
@@ -89,11 +93,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold"
-                android:textColor="#ff97d992"
                 android:background="#ff000000"
-                android:textSize="25sp" />
+                android:text="@string/action_sign_in"
+                android:textColor="#ff97d992"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
