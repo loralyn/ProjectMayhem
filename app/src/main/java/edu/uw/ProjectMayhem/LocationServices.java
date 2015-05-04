@@ -33,8 +33,9 @@ public class LocationServices extends IntentService {
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
+                // Called when a new location is found by the network location provider
                 Log.i("LOCATION SERVICES", location.toString());
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
